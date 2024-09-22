@@ -68,3 +68,6 @@ export class AppFooter {
 }
 ```
 Veja que importamos somente o componente que permitirá usarmos esse recurso, porém, o 'router' não é necessário. Em seguida definimos o componente, que terá seu nome, standalone e imports próprios. Vale lembrar que esse componente também pode ter um componente filho e assim por diante apenas inserindo-os no Array de imports. Em seguida, define-se o HTML e SCSS base (eu aqui selecionei scss na produção do projeto, mas a extensão pode ser .css ou até outras extensões de estilo).
+
+# Sobre o material
+O framework angular fornece um pacote chamado material, que nos entrega muitos e muitos fatores interessantes. Mas por algum motivo, quando se compila usando um editor em scss ele entrega muitos erros de injection. 

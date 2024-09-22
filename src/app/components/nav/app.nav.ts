@@ -3,7 +3,8 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-nav',
   standalone: true,
-  imports: [],
+  imports: [
+  ],
   templateUrl: './app.nav.html',
   styleUrl: './app.nav.scss'
 })
