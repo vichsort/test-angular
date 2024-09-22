@@ -1,1 +1,15 @@
-/* You can add global styles to this file, and also import other style files */
+$light: #f0ece1;
+$dark: #0f0f11;
+
+* {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+}
+
+body {
+    font-size: 1.2rem;
+    background-color: $dark;
+    color: $light;
+}

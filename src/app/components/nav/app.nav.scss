@@ -1,3 +1,24 @@
-* {
-    padding: 0;
+nav {
+    background-color: white;
+    padding: 0.6rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo {
+    background-color: green;
+    width: 45px;
+    height: 45px;
+    margin-right: 2rem;
+}
+
+.items {
+    flex-direction: row;
+    gap: 4px;
+}
+
+a {
+    margin-right: 2rem;
+    color: black
 }
