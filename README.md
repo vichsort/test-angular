@@ -1,27 +1,70 @@
-# TestApp
+# A Aplicação
+Isso é um aplicativo desenvolvido para teste do framework 'angular' e usa os pacotes da CLI do Angular (você pode ver mais [aqui](https://angular.dev/tools/cli)). Eu estou usando este framework por tres principais motivos:
+- Web Components
+- Typescript nativo 
+- Sass nativo
+São compilados automaticamente pelo framework e podem ser usados para desenvolver os componentes de forma que formem uma árvore na aplicação. Volto a dizer que é apenas um teste simples que não pretende ser muito grande --- apenas uma página estática com componentes no DOM. 
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.5.
+# Instalação
+Primeiramente, eu inicio com o node e usando o comando
+```bash
+npm init -y
+```
+para criar um arquivo vazio de 'package.json'. Logo em seguida, usamos 
+```bash
+npm install -g @angular/cli
+```
+para baixar o angular globalmente. Isso faz com que os pacotes estejam inclusos dentro do projeto que iremos criar agora:
+```bash
+ng new test-app
+```
+que criará uma aplicação. Essa será a qual iremos manipular. Depois de um tempo, se espera que uma árvore seja criada contendo muitas pastas e arquivos. Nela, eu seleciono que gostaria de usar SCSS como ferramenta de estilo --- mas isso é algo opcional, de minha preferência.
 
-## Development server
+## Organização
+Depois desta instalação, iremos organizar os componentes (que estão disponíveis em src/app). Para deixar os componentes que irão compor o aplicativo, deixamos todos eles inseridos dentro de 'app/components/*' (onde * representa a pasta com o nome do componente). O componente externo representará o arquivo pai que chamará os outros. Ou seja, 'app.components' é o pai e 'app.footer' é o filho.<br>
+Vale lembrar que precisamos importar todos os arquivos que serão usados, o que significa que precisamos adaptar todos os arquivos para suportar a vinda dos arquivos filho. Supondo que teremos dois componentes em 'src/app/components' sendo 'footer' e 'nav'. 
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+### O componente pai
+O componente pai é aquele que agrupa todos os outros componentes. Acima deste, nenhum outro pode ser definido. Seu papel é ser a renderização global de estilos, hipermarcação e interatividade. Definiremos o componente e o router - além de chamar os outros componentes.
+```typescript
+import { Component } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
 
-## Code scaffolding
+import { AppFooter } from './components/footer/app.footer';
+import { AppNav } from './components/nav/app.nav';
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [
+    RouterOutlet,
+    AppFooter,
+    AppNav
+  ],
+  templateUrl: './app.component.html',
+  styleUrl: './app.component.scss'
+})
+export class AppComponent {
 
-## Build
+}
+```
+Como podemos ver, importamos 'AppFooter' e 'AppNav' que são os componentes filho logo abaixo na árvore genealógica da aplicação. Depois de inserirmos o nome que ele possuirá (para a chamada no HTML), chamamos uma Array com todas as importações. Nesse caso, contendo o router que permite navegação de um viewport para outro e os elementos filho. Também definimos o arquivo HTML e SCSS.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
 
-## Running unit tests
+### Os componentes filho
+Dentro desses componentes, precisamos inserir um arquivo de extensão typescript. O exemplo aqui é de 'footer'.
+```typescript
+import { Component } from '@angular/core';
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+@Component({
+  selector: 'app-footer',
+  standalone: true,
+  imports: [],
+  templateUrl: './app.footer.html',
+  styleUrl: './app.footer.scss'
+})
+export class AppFooter {
+    
+}
+```
+Veja que importamos somente o componente que permitirá usarmos esse recurso, porém, o 'router' não é necessário. Em seguida definimos o componente, que terá seu nome, standalone e imports próprios. Vale lembrar que esse componente também pode ter um componente filho e assim por diante apenas inserindo-os no Array de imports. Em seguida, define-se o HTML e SCSS base (eu aqui selecionei scss na produção do projeto, mas a extensão pode ser .css ou até outras extensões de estilo).
